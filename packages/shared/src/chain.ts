@@ -146,6 +146,8 @@ export const CHAIN_ID = {
     ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
+    /** PreactFastRefreshPlugin */
+    PREACT_FAST_REFRESH: 'preact-fast-refresh',
   },
   /** Predefined minimizers */
   MINIMIZER: {

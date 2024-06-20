@@ -4,7 +4,8 @@ import type {
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import { deepmerge } from '@rsbuild/shared';
+import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
+import type { PluginPreactOptions } from '.';
 
 const modifySwcLoaderOptions = ({
   chain,
@@ -27,10 +28,16 @@ const modifySwcLoaderOptions = ({
   }
 };
 
-export const applyBasicPreactSupport = (api: RsbuildPluginAPI) => {
-  api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev }) => {
+export const applyBasicPreactSupport = (
+  api: RsbuildPluginAPI,
+  options: PluginPreactOptions,
+) => {
+  api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
+    const config = api.getNormalizedConfig();
+    const usingHMR = !isProd && config.dev.hmr && target === 'web';
     const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
       development: isDev,
+      refresh: usingHMR,
       runtime: 'automatic',
       importSource: 'preact',
     };
@@ -55,6 +62,23 @@ export const applyBasicPreactSupport = (api: RsbuildPluginAPI) => {
         return deepmerge(opts, extraOptions);
       },
     });
+
+    if (!usingHMR) {
+      return;
+    }
+
+    const { default: PrefreshRspackPlugin } = await import(
+      'rspack-plugin-prefresh'
+    );
+
+    chain
+      .plugin(CHAIN_ID.PLUGIN.PREACT_FAST_REFRESH)
+      .use(PrefreshRspackPlugin, [
+        {
+          include: [SCRIPT_REGEX],
+          ...options.prefreshOptions,
+        },
+      ]);
   });
 };
 

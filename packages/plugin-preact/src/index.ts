@@ -1,4 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
+import type { PluginOptions as PrefreshOptions } from 'rspack-plugin-prefresh';
 import { applyBasicPreactSupport, applyReactAliases } from './preact';
 
 export type PluginPreactOptions = {
@@ -7,6 +8,11 @@ export type PluginPreactOptions = {
    * @default true
    */
   reactAliasesEnabled?: boolean;
+  /**
+   * Options passed to `rspack-plugin-prefresh`
+   * @see https://www.npmjs.com/package/rspack-plugin-prefresh
+   */
+  prefreshOptions?: PrefreshOptions;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
@@ -18,7 +24,7 @@ export const pluginPreact = (
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
-      applyBasicPreactSupport(api);
+      applyBasicPreactSupport(api, options);
     }
 
     const { reactAliasesEnabled = true } = options;
