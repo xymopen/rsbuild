@@ -17,7 +17,9 @@ export const pluginPreact = (
   name: PLUGIN_PREACT_NAME,
 
   setup(api) {
-    applyBasicPreactSupport(api);
+    if (api.context.bundlerType === 'rspack') {
+      applyBasicPreactSupport(api);
+    }
 
     const { reactAliasesEnabled = true } = options;
 

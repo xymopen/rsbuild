@@ -1176,6 +1176,10 @@ importers:
         version: 5.4.5
 
   packages/plugin-preact:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -7835,7 +7839,7 @@ packages:
   rsbuild-plugin-google-analytics@1.0.0:
     resolution: {integrity: sha512-Z2hVetWq48QT+X/HMmtp+YTxzPw+ujt/KUrbQXn98LmUDYqJyGSCBAjit8atAoRiThUSKlkG+NU3+zkFvKoLdA==}
     peerDependencies:
-      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
+      '@rsbuild/core': link:D:\Users\xymopen\Documents\rsbuild\packages\core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -7843,7 +7847,7 @@ packages:
   rsbuild-plugin-open-graph@1.0.0:
     resolution: {integrity: sha512-SuN9w2FH2v9Mp9/jBowH/RvR74i5A1KzM8+3JrCwCpsuny2HQ3iZqVETgDJ0VIcXqLHUxPnI0aGMgbAcqmlzcg==}
     peerDependencies:
-      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
+      '@rsbuild/core': link:D:\Users\xymopen\Documents\rsbuild\packages\core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
